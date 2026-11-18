@@ -629,3 +629,18 @@ h3{font-weight:700}
 .galerie figure:first-child img{aspect-ratio:auto}
 .galerie figcaption{position:absolute;left:14px;bottom:14px;background:rgba(25,36,54,.82);color:#F6F2EA;font-family:'Comfortaa',var(--sans);font-size:14px;font-weight:600;padding:7px 14px;border-radius:99px}
 @media(max-width:760px){.galerie .grille{grid-template-columns:1fr;grid-template-rows:auto}.galerie figure:first-child{grid-row:auto}.galerie figure:first-child img{aspect-ratio:4/3}}
+
+/* Hauts de page : photos du cabinet, traitées comme la façade de l'accueil */
+.page-titre{background:linear-gradient(100deg,rgba(25,36,54,.92) 0%,rgba(25,36,54,.74) 38%,rgba(25,36,54,.22) 72%,rgba(25,36,54,.04) 100%),var(--ph4) center 50%/cover!important;padding:120px 0 96px!important;min-height:380px;display:flex;align-items:flex-end}
+.page-titre>.wrap{width:100%}
+.page-titre.pt-soins{background-image:linear-gradient(100deg,rgba(25,36,54,.92) 0%,rgba(25,36,54,.74) 38%,rgba(25,36,54,.22) 72%,rgba(25,36,54,.04) 100%),url(salle-soins.jpg)!important}
+.page-titre.pt-accueil{background-image:linear-gradient(100deg,rgba(25,36,54,.92) 0%,rgba(25,36,54,.74) 38%,rgba(25,36,54,.22) 72%,rgba(25,36,54,.04) 100%),url(accueil.jpg)!important}
+.page-titre.pt-attente{background-image:linear-gradient(100deg,rgba(25,36,54,.92) 0%,rgba(25,36,54,.74) 38%,rgba(25,36,54,.22) 72%,rgba(25,36,54,.04) 100%),url(salle-attente.jpg)!important}
+.permanence{background:linear-gradient(100deg,rgba(25,36,54,.94) 0%,rgba(25,36,54,.8) 45%,rgba(25,36,54,.35) 100%),url(salle-soins.jpg) center 55%/cover!important}
+@media(max-width:860px){
+ .page-titre,.page-titre.pt-soins,.page-titre.pt-accueil,.page-titre.pt-attente{background-position:center!important;padding:150px 0 40px!important;min-height:0}
+ .page-titre{background-image:linear-gradient(180deg,rgba(25,36,54,.15) 0%,rgba(25,36,54,.6) 45%,rgba(25,36,54,.92) 100%),var(--ph4)!important}
+ .page-titre.pt-soins{background-image:linear-gradient(180deg,rgba(25,36,54,.15) 0%,rgba(25,36,54,.6) 45%,rgba(25,36,54,.92) 100%),url(salle-soins.jpg)!important}
+ .page-titre.pt-accueil{background-image:linear-gradient(180deg,rgba(25,36,54,.15) 0%,rgba(25,36,54,.6) 45%,rgba(25,36,54,.92) 100%),url(accueil.jpg)!important}
+ .page-titre.pt-attente{background-image:linear-gradient(180deg,rgba(25,36,54,.15) 0%,rgba(25,36,54,.6) 45%,rgba(25,36,54,.92) 100%),url(salle-attente.jpg)!important}
+}
