@@ -1,0 +1,24 @@
+name: Photos de la fiche
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  photos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Télécharger les photos de la fiche Google
+        env:
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+        run: python3 .github/scripts/photos.py
+      - name: Enregistrer
+        run: |
+          git add photos-fiche
+          git diff --cached --quiet && exit 0
+          git config user.name "avis-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Photos de la fiche Google"
+          for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done
