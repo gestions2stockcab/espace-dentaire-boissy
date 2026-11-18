@@ -475,7 +475,7 @@ h2.suite{margin-top:56px}
 .map-infos{padding:32px}.map-infos h3{font-size:26px;margin-bottom:12px}.map-infos p{margin:0 0 10px;font-size:15.5px}
 @media(max-width:860px){.map-carte{grid-template-columns:1fr}.map{min-height:300px}}
 @media(max-width:700px){.avis-mk .avis-carte{grid-template-columns:1fr;padding:26px;gap:22px}.avis-mk .score{font-size:46px}}
-:root{--ph1:url(facade.jpg);--ph2:url(facade.jpg);--ph3:url(facade.jpg);--ph4:url(facade.jpg)}
+:root{--ph1:url(facade.jpg);--ph2:url(salle-soins.jpg);--ph3:url(accueil.jpg);--ph4:url(salle-attente.jpg)}
 /* ===== photos immersives ===== */
 .hero{min-height:calc(100vh - 110px);display:flex;align-items:center;background:linear-gradient(100deg,rgba(25,36,54,.9) 0%,rgba(25,36,54,.72) 38%,rgba(25,36,54,.25) 70%,rgba(25,36,54,.05) 100%),var(--ph1) center 42%/cover!important;padding:120px 0!important;border:0}
 .hero .wrap{width:100%}
@@ -619,3 +619,13 @@ h3{font-weight:700}
 @media(max-width:700px){.marque-dent{height:44px}.marque .m1{font-size:18px}.marque .m2{font-size:10px;letter-spacing:.16em}.marque{gap:10px}}
 .lieu{white-space:nowrap}
 .hero h1{font-size:clamp(30px,5.6vw,76px)}
+
+/* Galerie « Le cabinet » */
+.galerie{padding:72px 0 8px}
+.galerie .grille{display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:1fr 1fr;gap:16px;margin-top:28px}
+.galerie figure{margin:0;position:relative;border-radius:22px;overflow:hidden;background:var(--marine)}
+.galerie figure:first-child{grid-row:1/3}
+.galerie img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
+.galerie figure:first-child img{aspect-ratio:auto}
+.galerie figcaption{position:absolute;left:14px;bottom:14px;background:rgba(25,36,54,.82);color:#F6F2EA;font-family:'Comfortaa',var(--sans);font-size:14px;font-weight:600;padding:7px 14px;border-radius:99px}
+@media(max-width:760px){.galerie .grille{grid-template-columns:1fr;grid-template-rows:auto}.galerie figure:first-child{grid-row:auto}.galerie figure:first-child img{aspect-ratio:4/3}}
