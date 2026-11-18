@@ -1,0 +1,43 @@
+name: Avis Google
+on:
+  schedule:
+    - cron: "47 */3 * * *"   # toutes les 3 heures
+  workflow_dispatch:
+    inputs:
+      max:
+        description: "Nombre maximum de réponses automatiques ce passage"
+        default: "40"
+permissions:
+  contents: write
+  issues: write
+jobs:
+  avis:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+      GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Récupérer les avis
+        run: python3 .github/scripts/avis.py
+      - name: Répondre aux avis 4-5 étoiles
+        if: ${{ vars.REPONSES_AUTO == 'oui' }}
+        env:
+          MAX: ${{ github.event.inputs.max }}
+        run: python3 .github/scripts/reponses.py || true
+      - name: Alerte e-mail si nouvel avis
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          [ -f /tmp/alerte_boissy.md ] || exit 0
+          gh label create "avis" --color FBCA04 2>/dev/null || true
+          gh issue create --title "$(cat /tmp/alerte_boissy_titre.txt)" --body-file /tmp/alerte_boissy.md --label avis
+      - name: Publier si changement
+        run: |
+          git add avis-boissy.json boissy_fiche.json avis_vus.json 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git config user.name "avis-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Mise à jour des avis Google"
+          for i in 1 2 3; do git pull --rebase -q && git push -q && break; sleep 5; done

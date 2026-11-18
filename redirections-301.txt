@@ -1,0 +1,15 @@
+# Redirections 301 des URL de l’ancien site espace-dentaire-boissy.fr (format Apache .htaccess)
+Redirect 301 /cabinet https://espace-dentaire-boissy.fr/c/lequipe-du-centre-dentaire/
+Redirect 301 /equipe https://espace-dentaire-boissy.fr/c/lequipe-du-centre-dentaire/
+Redirect 301 /parcours https://espace-dentaire-boissy.fr/c/les-soins-dentaires/
+Redirect 301 /faq https://espace-dentaire-boissy.fr/c/conseils-patients/
+Redirect 301 /contact https://espace-dentaire-boissy.fr/c/contact/
+Redirect 301 /avis https://espace-dentaire-boissy.fr/
+Redirect 301 /urgences-dentaires-94 https://espace-dentaire-boissy.fr/c/en-cas-durgence-dentaire/
+Redirect 301 /mentions-legales https://espace-dentaire-boissy.fr/c/mentions-legales-espace-dentaire-boissy-dentiste/
+Redirect 301 /politique-confidentialite https://espace-dentaire-boissy.fr/c/mentions-legales-espace-dentaire-boissy-dentiste/
+Redirect 301 /soins/implants-dentaires https://espace-dentaire-boissy.fr/c/les-implants-dentaires-expliques/
+Redirect 301 /soins/blanchiment-dentaire https://espace-dentaire-boissy.fr/c/blanchiment-dentaire/
+Redirect 301 /soins/facettes-dentaires https://espace-dentaire-boissy.fr/c/les-facettes/
+Redirect 301 /soins/invisalign https://espace-dentaire-boissy.fr/c/aligneurs-invisibles/
+Redirect 301 /soins/urgences-dentaires https://espace-dentaire-boissy.fr/c/en-cas-durgence-dentaire/
