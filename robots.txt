@@ -1,2 +1,6 @@
 User-agent: *
-Disallow: /
+Allow: /
+Disallow: /tableau-de-bord/
+Disallow: /admin/
+
+Sitemap: https://espacedentaireboissy.fr/sitemap.xml
