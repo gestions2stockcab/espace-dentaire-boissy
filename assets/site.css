@@ -617,3 +617,5 @@ h3{font-weight:700}
 .hero:after{content:"";position:absolute;right:4%;bottom:12%;width:300px;height:315px;background:url(dent-or.png) no-repeat center/contain;opacity:.16;pointer-events:none}
 @media(max-width:860px){.hero:after{display:none}}
 @media(max-width:700px){.marque-dent{height:44px}.marque .m1{font-size:18px}.marque .m2{font-size:10px;letter-spacing:.16em}.marque{gap:10px}}
+.lieu{white-space:nowrap}
+.hero h1{font-size:clamp(30px,5.6vw,76px)}
