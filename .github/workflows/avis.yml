@@ -22,7 +22,6 @@ jobs:
       - name: Récupérer les avis
         run: python3 .github/scripts/avis.py
       - name: Répondre aux avis 4-5 étoiles
-        if: ${{ vars.REPONSES_AUTO == 'oui' }}
         env:
           MAX: ${{ github.event.inputs.max }}
         run: python3 .github/scripts/reponses.py || true
