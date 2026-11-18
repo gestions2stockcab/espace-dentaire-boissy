@@ -38,6 +38,8 @@ STARS = {"ONE": 1, "TWO": 2, "THREE": 3, "FOUR": 4, "FIVE": 5}
 PAS_PRENOM = {"boissy", "saint", "leger", "léger", "cabinet", "dentaire", "dentiste", "espace", "centre", "docteur", "dr",
               "madame", "monsieur", "mme", "mr", "m", "famille", "patient", "patiente", "client", "cliente", "user", "utilisateur"}
 
+PRENOMS = {l.strip() for l in open(os.path.join(os.path.dirname(__file__), "prenoms.txt"), encoding="utf-8") if l.strip() and not l.startswith("#")}
+
 def prenom(v):
     r = v.get("reviewer", {})
     if r.get("isAnonymous"): return ""
@@ -46,7 +48,8 @@ def prenom(v):
     p = mots[0]
     if p.isupper() or p.lower() in PAS_PRENOM: return ""   # « TOURE Awa » : nom de famille en premier
     if not re.fullmatch(r"[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]{2,19}(?:-[A-ZÀ-ÖØ-Þa-zà-öø-ÿ][a-zà-öø-ÿ]{1,19})?", p): return ""
-    return p
+    if not all(x in PRENOMS for x in p.lower().split("-")): return ""   # prénom connu de l'Insee, sinon pas de nom
+    return p[:1].upper() + p[1:]
 
 def ancien_prenom(v):  # règle d'origine, pour retrouver nos réponses déjà publiées
     r = v.get("reviewer", {})
