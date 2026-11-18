@@ -34,19 +34,35 @@ MODELES = [
 A_REFAIRE = ("accueillir", "vous revoir", "fidélité", "au cabinet.", "à bientôt")
 STARS = {"ONE": 1, "TWO": 2, "THREE": 3, "FOUR": 4, "FIVE": 5}
 
+# Prénom seulement en cas de certitude (règle du Dr Atlan, 18/11/2026) : sinon « Bonjour, » sans nom.
+PAS_PRENOM = {"boissy", "saint", "leger", "léger", "cabinet", "dentaire", "dentiste", "espace", "centre", "docteur", "dr",
+              "madame", "monsieur", "mme", "mr", "m", "famille", "patient", "patiente", "client", "cliente", "user", "utilisateur"}
+
 def prenom(v):
     r = v.get("reviewer", {})
     if r.get("isAnonymous"): return ""
+    mots = (r.get("displayName") or "").split()
+    if len(mots) < 2: return ""                        # un seul mot : pseudo, nom de famille ou ville → pas de nom
+    p = mots[0]
+    if p.isupper() or p.lower() in PAS_PRENOM: return ""   # « TOURE Awa » : nom de famille en premier
+    if not re.fullmatch(r"[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]{2,19}(?:-[A-ZÀ-ÖØ-Þa-zà-öø-ÿ][a-zà-öø-ÿ]{1,19})?", p): return ""
+    return p
+
+def ancien_prenom(v):  # règle d'origine, pour retrouver nos réponses déjà publiées
+    r = v.get("reviewer", {})
+    if r.get("isAnonymous"): return ""
     p = (r.get("displayName") or "").strip().split(" ")[0]
-    # prénom plausible uniquement (lettres, tirets, accents ; pas d'initiale seule, pas de pseudo)
     p = p[:1].upper() + p[1:]
     return p if re.fullmatch(r"[A-Za-zÀ-ÖØ-öø-ÿ][a-zà-öø-ÿ'’-]{1,20}", p) else ""
 
-def texte(v):
+def texte(v, nom=prenom):
     k = int(hashlib.md5((v.get("reviewId") or v.get("name", "")).encode()).hexdigest(), 16)
     t = MODELES[k % len(MODELES)].replace("{DU}", DU)
-    p = prenom(v)
+    p = nom(v)
     return (f"Bonjour {p}, " + t[0].lower() + t[1:]) if p else ("Bonjour, " + t[0].lower() + t[1:])
+
+def a_corriger(v, rep):  # notre propre réponse automatique, publiée avec un nom douteux
+    return rep == texte(v, ancien_prenom) and rep != texte(v)
 
 tok = call("https://oauth2.googleapis.com/token", {"client_id": env("GOOGLE_CLIENT_ID"), "client_secret": env("GOOGLE_CLIENT_SECRET"),
            "refresh_token": env("GOOGLE_REFRESH_TOKEN"), "grant_type": "refresh_token"}, form=True)["access_token"]
@@ -56,7 +72,7 @@ while True:
     d = call(base + "?pageSize=50&orderBy=updateTime%20desc" + (f"&pageToken={page}" if page else ""), token=tok)
     for v in d.get("reviews", []):
         rep = (v.get("reviewReply") or {}).get("comment", "")
-        if STARS.get(v.get("starRating"), 0) >= 4 and (not rep or (REFAIRE and rep.startswith("Bonjour") and any(x in rep.lower() for x in A_REFAIRE) and "équipe" in rep)):
+        if STARS.get(v.get("starRating"), 0) >= 4 and (not rep or a_corriger(v, rep) or (REFAIRE and rep.startswith("Bonjour") and any(x in rep.lower() for x in A_REFAIRE) and "équipe" in rep)):
             a_faire.append(v)
     page = d.get("nextPageToken")
     if not page: break
