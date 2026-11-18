@@ -573,6 +573,7 @@ h1{font-weight:700;letter-spacing:-.035em}
 .lang-sw{position:fixed;left:16px;bottom:16px;z-index:55;display:flex;gap:2px;padding:3px;border-radius:999px;background:var(--panneau,#fff);border:1px solid var(--trait,#ddd);box-shadow:0 4px 14px rgba(0,0,0,.18);font:600 13px/1 inherit;letter-spacing:.06em;transition:opacity .3s}
 .lang-sw button{font:inherit;padding:8px 12px;border:0;border-radius:999px;background:none;color:var(--discret,#667);cursor:pointer}.lang-sw button[aria-pressed="true"]{background:#1d4ed8;color:#fff}
 .lang-sw.off{opacity:0;pointer-events:none}@media(max-width:700px){.lang-sw{left:12px;bottom:12px;font-size:12px}.lang-sw button{padding:7px 10px}}@media print{.lang-sw{display:none}}.lang-sw a{padding:8px 12px;border-radius:999px;color:var(--discret,#667);text-decoration:none}.lang-sw a[aria-current]{background:var(--navy,#172B54);color:#fff}@media(max-width:700px){.lang-sw a{padding:7px 10px}}.av-OA{background-image:url(dr-assaraf.webp)}.av-EL{background-image:url(dr-laloum.webp)}.av-AS{background-image:url(dr-seban.webp)}.av-MS{background-image:url(dr-sportiello.webp)}.av-SB{background-image:url(dr-bouaziz.webp)}.av-JB{background-image:url(dr-boudara.webp)}.av-DG{background-image:url(dr-gentile.webp)}.av-LS{background-image:url(dr-scemama.webp)}
-img.logo{width:72px;height:72px;border-radius:12px;display:block}
-.site-footer img.logo{width:120px!important;height:120px;border-radius:16px;margin-bottom:18px}
-@media(max-width:700px){.site-header img.logo{width:56px;height:56px;border-radius:10px}}
+
+img.logo{height:96px;width:auto!important;display:block;margin:-6px 0}
+.site-footer img.logo{height:110px;margin-bottom:18px}
+@media(max-width:700px){.site-header img.logo{height:62px}}
