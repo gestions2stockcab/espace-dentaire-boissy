@@ -644,3 +644,13 @@ h3{font-weight:700}
  .page-titre.pt-accueil{background-image:linear-gradient(180deg,rgba(25,36,54,.15) 0%,rgba(25,36,54,.6) 45%,rgba(25,36,54,.92) 100%),url(accueil.jpg)!important}
  .page-titre.pt-attente{background-image:linear-gradient(180deg,rgba(25,36,54,.15) 0%,rgba(25,36,54,.6) 45%,rgba(25,36,54,.92) 100%),url(salle-attente.jpg)!important}
 }
+
+/* Questions fréquentes, liens locaux */
+details.faq{border:1px solid var(--trait);border-radius:16px;padding:0 20px;margin:0 0 10px;background:rgba(255,255,255,.7)}
+details.faq summary{cursor:pointer;font-weight:600;padding:16px 0;list-style:none}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary:after{content:"+";float:right;color:#9A8257}
+details.faq[open] summary:after{content:"–"}
+details.faq p{margin:0 0 16px}
+.liens-loc{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;margin:10px 0 0;opacity:.85}
+.liens-loc a{color:inherit}
