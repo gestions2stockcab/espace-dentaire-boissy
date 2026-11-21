@@ -50,11 +50,12 @@ def page(slug, en, title, desc, h1, crumbs, body):
     open(f"{d}/index.html", "w", encoding="utf-8").write(s)
 
 def rendre(arts):
-    """Pages d'articles + page Actualités (FR/EN) + sitemap."""
+    """Pages d'articles + page Actualités (FR/EN) + bloc Actualités de l'accueil + sitemap."""
+    extra = json.load(open("articles.json", encoding="utf-8")) if os.path.exists("articles.json") else []
     for en in (False, True):
         pre = "../../../en/" if en else "../../"
-        liens = []
-        for a in sorted(arts, key=lambda x: x["mois"], reverse=True):
+        entrees = []  # (date de tri, slug, libellé, date affichée)
+        for a in arts:
             f = lire(a["slug"], en)
             an, mo = int(a["mois"][:4]), int(a["mois"][5:])
             lab = (f"{MOIS_EN[mo-1]} {an} tip" if en else f"Conseil de {MOIS_FR[mo-1]} {an}")
@@ -67,15 +68,32 @@ def rendre(arts):
                     + f'<p class="avert">{"This is general advice and does not replace your practitioner’s instructions." if en else "Ces conseils sont généraux et ne remplacent pas les consignes données par votre praticien."}</p>')
             page(slug, en, f"{h1} | Espace dentaire Boissy", f["chapeau"], h1,
                  [("actualites", "News" if en else "Actualités")], body)
-            liens.append((slug, f"{lab}: {f['titre']}" if en else f"{lab} : {f['titre']}"))
-        body = ("<p class=\"chapeau-article\">" + ("Every month, a tip from the centre to keep your teeth and gums healthy." if en else "Chaque mois, un conseil du centre pour garder des dents et des gencives en bonne santé.") + "</p>"
-                + '<ul class="liens-liste">' + "".join(f'<li><a href="{pre}c/{s}/"><span>{H.escape(t)}</span><span aria-hidden="true">›</span></a></li>' for s, t in liens) + "</ul>")
+            entrees.append((a.get("date", a["mois"] + "-01"), slug, h1, f"{MOIS_EN[mo-1]} {an}" if en else f"{MOIS_FR[mo-1].capitalize()} {an}"))
+        for x in extra:  # articles rédigés (pages déjà présentes)
+            y, m, d = x["date"].split("-")
+            dd = f"{int(d)} {MOIS_EN[int(m)-1]} {y}" if en else f"{int(d)} {MOIS_FR[int(m)-1]} {y}"
+            entrees.append((x["date"], x["slug"], x["titre_en"] if en else x["titre"], dd))
+        entrees.sort(reverse=True)
+        body = ("<p class=\"chapeau-article\">" + ("Articles and a monthly tip from the centre to keep your teeth and gums healthy." if en else "Articles et conseil du mois : les infos du centre pour garder des dents et des gencives en bonne santé.") + "</p>"
+                + '<ul class="liens-liste">' + "".join(f'<li><a href="{pre}c/{s_}/"><span>{H.escape(t)}</span><span aria-hidden="true">›</span></a></li>' for _, s_, t, _d in entrees) + "</ul>")
         page("actualites", en, ("News" if en else "Actualités") + " | Espace dentaire Boissy-Saint-Léger",
-             "Every month, a tip from Espace dentaire Boissy to keep your teeth and gums healthy." if en else "Chaque mois, un conseil de l’Espace dentaire Boissy pour garder des dents et des gencives en bonne santé.",
+             "Articles and a monthly tip from Espace dentaire Boissy to keep your teeth and gums healthy." if en else "Articles et conseil du mois de l’Espace dentaire Boissy pour garder des dents et des gencives en bonne santé.",
              "News" if en else "Actualités", [], body)
+        # bloc de l'accueil
+        hp = "en/index.html" if en else "index.html"
+        hs = open(hp, encoding="utf-8").read()
+        hpre = "../en/" if en else ""
+        bloc = ('<section class="actu-home"><div class="wrap"><div class="chapeau"><h2>' + ("News" if en else "Actualités") + '</h2></div><div class="grille">'
+                + "".join(f'<a class="carte" href="{hpre}c/{s_}/"><h3>{H.escape(t)}</h3><p>{d_}</p></a>' for _, s_, t, d_ in entrees[:3])
+                + f'</div><p style="margin-top:28px"><a class="btn btn-trait" href="{hpre}c/actualites/">' + ("All news" if en else "Toutes les actualités") + "</a></p></div></section>\n")
+        if '<section class="actu-home">' in hs:
+            hs = re.sub(r'<section class="actu-home">.*?</section>\n', lambda m: bloc, hs, count=1, flags=re.S)
+        else:
+            hs = hs.replace('<section class="cp-home">', bloc + '<section class="cp-home">', 1)
+        open(hp, "w", encoding="utf-8").write(hs)
     # sitemap
     sm = open("sitemap.xml", encoding="utf-8").read()
-    for slug in ["actualites"] + [f"actu-{a['mois']}-{a['slug']}" for a in arts]:
+    for slug in ["actualites"] + [f"actu-{a['mois']}-{a['slug']}" for a in arts] + [x["slug"] for x in extra]:
         if f"{SITE}c/{slug}/</loc>" in sm: continue
         u, ue = f"{SITE}c/{slug}/", f"{SITE}en/c/{slug}/"
         x = f'<url><loc>{u}</loc><xhtml:link rel="alternate" hreflang="fr" href="{u}"/><xhtml:link rel="alternate" hreflang="en" href="{ue}"/><priority>0.6</priority></url>\n'

@@ -23,7 +23,7 @@ jobs:
         run: python3 .github/scripts/actu.py
       - name: Mémoriser
         run: |
-          git add -A actu_last.json actualites.json c en/c sitemap.xml
+          git add -A actu_last.json actualites.json c en sitemap.xml index.html
           git diff --cached --quiet && exit 0
           git config user.name "actu-bot"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Conseil du mois publié"

@@ -21,7 +21,7 @@ Redirect 301 /blog/mal-de-dent-que-faire-en-attendant-le-dentiste https://espace
 Redirect 301 /blog/detartrage-dentaire-a-quelle-frequence-quel-prix https://espacedentaireboissy.fr/c/conseil-apres-detartrage/
 Redirect 301 /blog/couronne-dentaire-prix-materiaux-duree-de-vie https://espacedentaireboissy.fr/c/conseil-apres-couronne/
 Redirect 301 /blog/dent-de-sagesse-extraction-quand-comment-suites https://espacedentaireboissy.fr/c/dents-de-sagesse/
-Redirect 301 /blog/gencives-qui-saignent-causes-traitements-parodontite https://espacedentaireboissy.fr/c/soins-des-gencives-parodontie/
+Redirect 301 /blog/gencives-qui-saignent-causes-traitements-parodontite https://espacedentaireboissy.fr/c/parodontie-boissy-saint-leger/
 Redirect 301 /equipe/dr-ouriel-assaraf https://espacedentaireboissy.fr/c/lequipe-du-centre-dentaire/
 Redirect 301 /equipe/dr-eva-laloum https://espacedentaireboissy.fr/c/lequipe-du-centre-dentaire/
 Redirect 301 /equipe/dr-allan-seban https://espacedentaireboissy.fr/c/lequipe-du-centre-dentaire/
